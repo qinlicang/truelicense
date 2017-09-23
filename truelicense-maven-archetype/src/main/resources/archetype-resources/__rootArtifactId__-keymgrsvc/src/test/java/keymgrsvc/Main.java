@@ -5,6 +5,7 @@
 package ${package}.keymgrsvc;
 
 import ${package}.keymgr.LicenseManager;
+import global.namespace.neuron.di.java.*;
 import java.io.IOException;
 import static java.lang.System.*;
 import java.net.URI;
@@ -19,8 +20,12 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class Main {
 
     public static void main(final String[] args) throws IOException {
+        final ConsumerLicenseManagementService consumerLicenseManagementService = Incubator
+                .wire(ConsumerLicenseManagementService.class)
+                .bind(ConsumerLicenseManagementService::manager).to(LicenseManager::get)
+                .breed();
         final ResourceConfig config = new ResourceConfig(ConsumerLicenseManagementServiceExceptionMapper.class)
-                .register(new ConsumerLicenseManagementService(LicenseManager::get));
+                .register(consumerLicenseManagementService);
         final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:9998/"), config);
         server.start();
 

@@ -27,9 +27,8 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <scope>provided</scope>
+            <groupId>global.namespace.neuron-di</groupId>
+            <artifactId>neuron-di</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.ws.rs</groupId>

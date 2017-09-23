@@ -109,6 +109,7 @@
         <jackson.version>2.9.1</jackson.version>
         <javaee.version>7.0</javaee.version>
         <jersey.version>2.26</jersey.version>
+        <neuron-di.version>5.3</neuron-di.version>
     </properties>
 
     <modules>
@@ -207,6 +208,16 @@
                         <artifactId>jsr305</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>global.namespace.neuron-di</groupId>
+                <artifactId>neuron-di</artifactId>
+                <version>${neuron-di.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>global.namespace.neuron-di</groupId>
+                <artifactId>neuron-di-scala_${scala.compat.version}</artifactId>
+                <version>${neuron-di.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>

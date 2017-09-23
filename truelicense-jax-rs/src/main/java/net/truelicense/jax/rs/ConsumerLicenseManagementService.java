@@ -5,19 +5,19 @@
 
 package net.truelicense.jax.rs;
 
+import global.namespace.neuron.di.java.Caching;
+import global.namespace.neuron.di.java.Neuron;
 import net.truelicense.api.ConsumerLicenseManager;
 import net.truelicense.api.License;
 import net.truelicense.api.LicenseManagementException;
 import net.truelicense.obfuscate.Obfuscate;
 import net.truelicense.spi.io.MemoryStore;
 
-import javax.inject.Provider;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 import java.net.URI;
-import java.util.Objects;
 
 import static javax.ws.rs.core.MediaType.*;
 import static javax.ws.rs.core.Response.Status.*;
@@ -29,10 +29,10 @@ import static javax.ws.rs.core.Response.Status.*;
  * @since  TrueLicense 2.3
  * @author Christian Schlichtherle
  */
-// TODO: Use Neuron DI for dependency injection.
 @Path(ConsumerLicenseManagementService.LICENSE)
 @Produces({ APPLICATION_JSON, APPLICATION_XML, TEXT_XML })
-public final class ConsumerLicenseManagementService {
+@Neuron
+public abstract class ConsumerLicenseManagementService {
 
     @Obfuscate private static final String FALSE = "false";
     @Obfuscate static final String LICENSE = "license";
@@ -43,13 +43,8 @@ public final class ConsumerLicenseManagementService {
 
     private static final URI licenseURI = URI.create(LICENSE);
 
-    private final Provider<ConsumerLicenseManager> provider;
-
-    public ConsumerLicenseManagementService(final Provider<ConsumerLicenseManager> provider) {
-        this.provider = Objects.requireNonNull(provider);
-    }
-
-    private ConsumerLicenseManager manager() { return provider.get(); }
+    @Caching
+    public abstract ConsumerLicenseManager manager();
 
     @GET
     @Path(SUBJECT)
